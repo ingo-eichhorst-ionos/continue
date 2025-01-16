@@ -20,11 +20,14 @@ const gptFullFileEditPrompt: PromptTemplateFunction = (_, otherData) => {
     ${otherData.codeToEdit}
     \`\`\`
 
-    Please rewrite the above file to address the following request:
+    Rewrite the above file to address the following request:
 
     ${otherData.userInput}
 
-    You should rewrite the entire file without any natural language explanation. DO NOT surround the code in a code block and DO NOT explain yourself.`;
+    You should rewrite the entire file without any natural language explanation.
+    DO NOT surround the code in a code block and DO NOT explain yourself.
+    Only change the code related to the change. Leave the rest of the code unchanged.
+    `;
 };
 
 export const gptEditPrompt: PromptTemplateFunction = (history, otherData) => {

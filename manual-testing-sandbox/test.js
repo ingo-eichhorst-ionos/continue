@@ -10,6 +10,7 @@ class Calculator {
 
   subtract(number) {
     this.result -= number;
+    validateSubZero(this.result);
     return this;
   }
 
@@ -33,5 +34,11 @@ class Calculator {
   reset() {
     this.result = 0;
     return this;
+  }
+}
+
+function validateSubZero(result) {
+  if (result < 0) {
+    throw new Error("Result cannot be negative");
   }
 }

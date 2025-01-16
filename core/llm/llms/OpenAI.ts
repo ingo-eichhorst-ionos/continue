@@ -316,6 +316,11 @@ class OpenAI extends BaseLLM {
 
     const body = this._convertArgs(options, messages);
 
+    console.log("REQUESTING OPEN AI: ", JSON.stringify({
+      body,
+      headers: this._getHeaders(),
+      signal
+    }, null, 2));
     const response = await this.fetch(this._getEndpoint("chat/completions"), {
       method: "POST",
       headers: this._getHeaders(),
@@ -330,12 +335,16 @@ class OpenAI extends BaseLLM {
       return;
     }
 
+    let resp = ""
     for await (const value of streamSse(response)) {
       const chunk = fromChatCompletionChunk(value);
+      resp += (chunk?.content ?? "");
       if (chunk) {
         yield chunk;
       }
     }
+    console.log("RESPONSE:")
+    console.log(resp)
   }
 
   protected async *_streamFim(

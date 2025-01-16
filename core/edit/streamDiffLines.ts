@@ -117,6 +117,12 @@ export async function* streamDiffLines(
     lines = filterEnglishLinesAtEnd(lines);
   }
 
+  // let origLines = []
+  // for await (const line of lines) {
+  //   console.log("LINE: " + line);
+  //   origLines.push(line);
+  // }
+
   let diffLines = streamDiff(oldLines, lines);
   diffLines = filterLeadingAndTrailingNewLineInsertion(diffLines);
   if (highlighted.length === 0) {

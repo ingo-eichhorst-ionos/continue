@@ -137,6 +137,11 @@ export async function deterministicApplyLazyEdit(
 
   // If there is no lazy block anywhere, we add our own to the outsides
   // so that large chunks of the file don't get removed
+  const otString = oldTree.rootNode.toString();
+  const ntString = newTree.rootNode.toString();
+  console.log(otString);
+  console.log(ntString);
+
   if (!findInAst(newTree.rootNode, isLazyBlock)) {
     // First, we need to check whether there are matching (similar) nodes at the root level
     const firstSimilarNode = findInAst(oldTree.rootNode, (node) =>

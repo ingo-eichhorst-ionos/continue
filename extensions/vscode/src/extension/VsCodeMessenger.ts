@@ -28,6 +28,8 @@ import { showTutorial } from "../util/tutorial";
 import { getExtensionUri } from "../util/vscode";
 import { VsCodeIde } from "../VsCodeIde";
 import { VsCodeWebviewProtocol } from "../webviewProtocol";
+import { log } from "node:console";
+import { logger } from "handlebars";
 
 /**
  * A shared messenger class between Core and Webview
@@ -202,6 +204,15 @@ export class VsCodeMessenger {
         llm,
         fastLlm,
       );
+      logger.log(
+        logger.ERROR,
+         "Applying code block to file: " + JSON.stringify({
+          instant, diffLines
+        })
+      );
+      console.log("Applying code block to file: " + JSON.stringify({
+        instant, diffLines
+      }))
 
       const verticalDiffManager = await this.verticalDiffManagerPromise;
 
@@ -213,6 +224,7 @@ export class VsCodeMessenger {
         );
       } else {
         const prompt = `The following code was suggested as an edit:\n\`\`\`\n${data.text}\n\`\`\`\nPlease apply it to the previous code.`;
+        console.log("DIFF PROMPT: " + prompt);
         const fullEditorRange = new vscode.Range(
           0,
           0,
